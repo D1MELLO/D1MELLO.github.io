@@ -4,114 +4,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Sérgio de Melo - Desenvolvedor Backend Java & Spring Boot.">
-    <title>Sérgio de Melo | Backend Developer</title>
-
+    <meta name="description" content="Sérgio de Melo - Desenvolvedor Backend & Cibersegurança.">
+    <title>Sérgio de Melo | Digital Experience</title>
     <link rel="stylesheet" href="style.css">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono:wght@700&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;800&family=Orbitron:wght@500;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
         rel="stylesheet">
 </head>
 
 <body>
+    <div class="ambient-light yellow"></div>
+    <div class="ambient-light purple"></div>
+    <div class="noise-overlay"></div>
 
-    <header class="container">
+    <button id="lang-toggle" class="glass-btn">[ EN ]</button>
+
+    <header class="glass-header">
         <div class="logo">Sérgio<span class="highlight">.dev</span></div>
         <nav>
-            <a href="#stacks">Stacks</a>
-            <a href="#experiencia">Experiência</a>
-            <a href="#projetos">Projetos</a>
+            <a href="#stacks" data-en="Stack">Stack</a>
+            <a href="#jornada" data-en="Journey">Jornada</a>
+            <a href="#projetos" data-en="Projects">Projetos</a>
         </nav>
     </header>
 
     <main class="container">
 
         <section id="hero">
-            <p class="mono-text highlight">> Olá, eu sou</p>
-            <h1>Sérgio de Melo.</h1>
-            <h2 class="subtitle">Desenvolvedor Backend & Entusiasta Linux.</h2>
-            <p class="bio">
-                Estudante de ADS na FIAP focado em criar sistemas robustos com <strong>Java, Spring Boot</strong> e
-                arquitetura escalável.
+            <span class="highlight" style="font-family: var(--font-mono); margin-bottom: 10px;"
+                data-en="> System Online">> Sistema Online</span>
+            <h1 class="hero-title">SÉRGIO <br> <span class="text-gradient">DE MELO</span></h1>
+            <h2 class="subtitle" data-en="Backend Architect & Security Analyst">Backend Architect & Security Analyst
+            </h2>
+            <p class="bio" 
+               data-en="Building the backbone of secure applications. <strong>Final-year Systems Analysis student</strong> at FIAP focused on <strong>Backend Development</strong> and <strong>Cybersecurity</strong>.<br>English B2 Certified.">
+                Construindo a espinha dorsal de aplicações seguras. <strong>Graduando em fase final</strong> de ADS na FIAP, focado em <strong>Desenvolvimento Backend</strong> e <strong>Cibersegurança</strong>.<br>
+                Certificado Inglês B2.
             </p>
-            <div class="cta-buttons">
-                <a href="#projetos" class="btn btn-primary">Ver Projetos</a>
-                <a href="https://github.com/D1MELLO" target="_blank" class="btn btn-outline">GitHub</a>
+            <div class="cta-group">
+                <a href="#projetos" class="btn-glow" data-en="Explore Work">Explorar Projetos</a>
+                <div style="display: flex; gap: 15px;">
+                    <a href="https://github.com/D1MELLO" target="_blank" class="icon-link">GH</a>
+                    <a href="https://www.linkedin.com/in/srdimello/" target="_blank" class="icon-link">IN</a>
+                </div>
             </div>
         </section>
 
-        <hr>
-
-        <section id="stacks">
-            <h3>01. Stack Tecnológica</h3>
+        <section id="stacks" class="reveal">
+            <h3 class="section-title" data-en="01. Tech Arsenal">01. Arsenal Tecnológico</h3>
             <div class="skills-grid">
-                <div class="skill-card">
-                    <span class="skill-title">Java 17+</span>
-                    <div class="progress">
-                        <div class="bar" style="width: 90%"></div>
+                <div class="skill-card glass-card">
+                    <div class="card-icon">☕</div>
+                    <h4>Java & Spring</h4>
+                    <div class="progress-bar">
+                        <div class="fill" style="width:90%"></div>
                     </div>
                 </div>
-                <div class="skill-card">
-                    <span class="skill-title">Spring Boot</span>
-                    <div class="progress">
-                        <div class="bar" style="width: 85%"></div>
+                <div class="skill-card glass-card">
+                    <div class="card-icon">🛡️</div>
+                    <h4>AppSec / OWASP</h4>
+                    <div class="progress-bar">
+                        <div class="fill" style="width:80%"></div>
                     </div>
                 </div>
-                <div class="skill-card">
-                    <span class="skill-title">Linux (Admin)</span>
-                    <div class="progress">
-                        <div class="bar" style="width: 80%"></div>
+                <div class="skill-card glass-card">
+                    <div class="card-icon">🐧</div>
+                    <h4>Linux / Kali</h4>
+                    <div class="progress-bar">
+                        <div class="fill" style="width:85%"></div>
                     </div>
                 </div>
-                <div class="skill-card">
-                    <span class="skill-title">Docker</span>
-                    <div class="progress">
-                        <div class="bar" style="width: 70%"></div>
+                <div class="skill-card glass-card">
+                    <div class="card-icon">🐳</div>
+                    <h4>Docker & Cloud</h4>
+                    <div class="progress-bar">
+                        <div class="fill" style="width:70%"></div>
                     </div>
                 </div>
-                <div class="skill-card">
-                    <span class="skill-title">Android (Kotlin)</span>
-                    <div class="progress">
-                        <div class="bar" style="width: 75%"></div>
+                <div class="skill-card glass-card">
+                    <div class="card-icon">📱</div>
+                    <h4>Android Kotlin</h4>
+                    <div class="progress-bar">
+                        <div class="fill" style="width:75%"></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <hr>
+        <section id="jornada" class="reveal">
+            <h3 class="section-title" data-en="02. Career Journey">02. Jornada Profissional</h3>
 
-        <section id="experiencia">
-            <h3>02. Experiência</h3>
-            <div class="experience-item">
-                <div class="exp-header">
-                    <h4>Suporte TI</h4>
-                    <span class="date">Ago 2023 - Dez 2023</span>
-                </div>
-                <span class="company">Secretaria Mun. de Educação - Croatá, CE</span>
-                <p>Manutenção de infraestrutura, suporte técnico e otimização de sistemas.</p>
+            <div class="bento-grid">
+
+                <article class="glass-card">
+                    <span class="card-year">2025</span>
+                    <div class="card-icon">🎓</div>
+                    <div class="card-header">
+                        <h4 data-en="Systems Analysis & Dev">Tecnólogo em ADS</h4>
+                        <span class="highlight">FIAP</span>
+                    </div>
+                    <p class="card-desc"
+                        data-en="Focus on Software Architecture, Cloud Computing and AI. High academic performance.">
+                        Foco em Arquitetura de Software, Cloud Computing e Inteligência Artificial. Alta performance
+                        acadêmica.
+                    </p>
+                </article>
+
+                <article class="glass-card">
+                    <span class="card-year">2023</span>
+                    <div class="card-icon">💼</div>
+                    <div class="card-header">
+                        <h4 data-en="IT Support Technician">Suporte Técnico TI</h4>
+                        <span class="highlight" data-en="Municipal Dept. Education">Secretaria Mun. Educação</span>
+                    </div>
+                    <p class="card-desc"
+                        data-en="Critical infrastructure maintenance and diagnosis. Direct user support and systems optimization.">
+                        Sustentação de infraestrutura crítica e diagnóstico. Suporte direto ao usuário e otimização de
+                        sistemas.
+                    </p>
+                </article>
+
+                <article class="glass-card bento-wide">
+                    <div class="card-header">
+                        <h4 data-en="Certifications & Achievements">Certificações & Conquistas</h4>
+                    </div>
+                    <ul class="cert-list">
+                        <li class="cert-item"><span class="check">✔</span> <strong>Cisco</strong> CyberSec</li>
+                        <li class="cert-item"><span class="check">✔</span> <strong>Google</strong> Cloud Foundations
+                        </li>
+                        <li class="cert-item"><span class="check">✔</span> <strong>FIAP</strong> Análise de Sistemas
+                        </li>
+                        <li class="cert-item"><span class="check">✔</span> <strong>EF SET</strong> English (B2)</li>
+                    </ul>
+                </article>
+
             </div>
         </section>
 
-        <hr>
-
-        <section id="projetos">
-            <h3>03. Projetos</h3>
+        <section id="projetos" class="reveal">
+            <h3 class="section-title" data-en="03. Featured Projects">03. Projetos de Destaque</h3>
 
             <div class="projects-grid">
-                <article class="project-card">
-                    <div class="card-content">
-                        <h4>CarbonTrack Android</h4>
-                        <p>App nativo (Kotlin) para cálculo de pegada de carbono com arquitetura MVVM.</p>
-                        <div class="tags">
-                            <span>Kotlin</span><span>Android</span>
-                        </div>
+                <article class="project-card glass-card">
+                    <div class="badge">NOTA MÁXIMA</div>
+                    <div class="card-header">
+                        <h4>⚡ PZEnergy</h4>
+                        <span class="highlight">Global Solution</span>
+                    </div>
+                    <p class="card-desc"
+                        data-en="IoT system generating renewable energy via piezoelectricity managed by AI.">
+                        Sistema IoT gerando energia renovável via piezoeletricidade gerenciado por IA.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-pill">Java</span><span class="tech-pill">IoT</span><span
+                            class="tech-pill">AI</span>
+                    </div>
+                </article>
+
+                <article class="project-card glass-card">
+                    <div class="badge">NOTA MÁXIMA</div>
+                    <div class="card-header">
+                        <h4>📦 iFood Parceiros</h4>
+                        <span class="highlight">Challenge FIAP</span>
+                    </div>
+                    <p class="card-desc" data-en="Financial backoffice system for iFood partners.">
+                        Sistema de backoffice financeiro para parceiros do iFood.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-pill">Java</span><span class="tech-pill">SQL</span>
                     </div>
                 </article>
             </div>
 
-            <h4 class="github-title">> Repositórios Públicos (GitHub)</h4>
+            <h4 style="margin-top: 50px; font-family: var(--font-mono); color: var(--text-muted);"
+                data-en="> GitHub Labs">> Laboratórios (GitHub)</h4>
             <div id="github-list" class="projects-grid">
                 <p>Carregando...</p>
             </div>
@@ -119,8 +187,8 @@
 
     </main>
 
-    <footer>
-        <p>&copy; 2025 Sérgio de Melo.</p>
+    <footer class="glass-footer">
+        <p><span class="highlight">Sérgio de Melo © 2025</span></p>
     </footer>
 
     <script src="main.js" defer></script>

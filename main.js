@@ -1,13 +1,55 @@
-/* main.js - Lógica KISS (Multi-source: Pessoal + Organização) */
+/* main.js - Logic & Experience */
 
 const CONFIG = {
     username: 'D1MELLO',
-    orgname: 'FIAP-CODERS', // Nome da sua organização
-    cacheKey: 'kiss_portfolio_v3_mixed', // Mudei a versão para limpar o cache antigo
-    cacheDuration: 1000 * 60 * 60 * 24 // 24 horas
+    orgname: 'FIAP-CODERS',
+    topicFilter: 'portfolio',
+    cacheKey: 'impact_portfolio_v1',
+    cacheDuration: 1000 * 60 * 60 * 24
 };
 
-// Sanitização de Texto (Segurança)
+/* --- LANGUAGE SYSTEM --- */
+const langBtn = document.getElementById('lang-toggle');
+let currentLang = localStorage.getItem('site_lang') || 'pt';
+
+function updateLanguage() {
+    const elements = document.querySelectorAll('[data-en]');
+    elements.forEach(el => {
+        if (!el.getAttribute('data-pt')) el.setAttribute('data-pt', el.innerHTML);
+        el.innerHTML = currentLang === 'en' ? el.getAttribute('data-en') : el.getAttribute('data-pt');
+    });
+    if (langBtn) langBtn.textContent = currentLang === 'pt' ? '[ EN ]' : '[ PT ]';
+    localStorage.setItem('site_lang', currentLang);
+}
+
+if (langBtn) {
+    langBtn.addEventListener('click', () => {
+        currentLang = currentLang === 'pt' ? 'en' : 'pt';
+        updateLanguage();
+    });
+}
+
+/* --- SCROLL ANIMATION (REVEAL) --- */
+function initScrollReveal() {
+    const reveals = document.querySelectorAll('.reveal');
+
+    const revealOnScroll = () => {
+        const windowHeight = window.innerHeight;
+        const elementVisible = 100;
+
+        reveals.forEach((reveal) => {
+            const elementTop = reveal.getBoundingClientRect().top;
+            if (elementTop < windowHeight - elementVisible) {
+                reveal.classList.add('active');
+            }
+        });
+    };
+
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll(); // Trigger once on load
+}
+
+/* --- GITHUB LOGIC --- */
 const escapeHTML = (str) => {
     if (!str) return '';
     return str.replace(/[&<>"']/g,
@@ -15,105 +57,94 @@ const escapeHTML = (str) => {
     );
 };
 
-// Renderizar HTML dos Cards
 function renderProjects(repos) {
     const container = document.getElementById('github-list');
     container.innerHTML = '';
 
-    // Filtra forks e ordena por data (mais recentes primeiro)
     const projects = repos
-        .filter(r => !r.fork)
-        .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+        .filter(repo => {
+            if (repo.fork) return false;
+            return repo.topics && repo.topics.includes(CONFIG.topicFilter);
+        })
+        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
     if (projects.length === 0) {
-        container.innerHTML = '<p>Nenhum repositório público encontrado.</p>';
+        container.innerHTML = '<p>Nenhum projeto encontrado.</p>';
         return;
     }
 
     projects.forEach(repo => {
         const card = document.createElement('article');
-        card.className = 'project-card';
+        card.className = 'project-card glass-card'; // Usa o estilo Glass
 
-        // Verifica se o dono do repositório é a Organização
         const isOrg = repo.owner && repo.owner.login === CONFIG.orgname;
-        // Cria uma etiqueta visual
+
         const labelHTML = isOrg
-            ? '<span style="color:var(--accent); font-size:0.7rem; font-weight:bold; display:block; margin-bottom:5px;">[ EQUIPE / FIAP ]</span>'
-            : '<span style="color:#666; font-size:0.7rem; font-weight:bold; display:block; margin-bottom:5px;">[ PESSOAL ]</span>';
+            ? '<span style="color:var(--neon-yellow); font-size:0.6rem; font-weight:bold; letter-spacing:1px;">[ FIAP ]</span>'
+            : '<span style="color:var(--text-muted); font-size:0.6rem; font-weight:bold; letter-spacing:1px;">[ PERSONAL ]</span>';
+
+        let description = repo.description;
+        if (!description) {
+            description = isOrg ? 'Academic project developed at FIAP.' : 'Personal development project.';
+        }
+
+        const dataCriacao = new Date(repo.created_at).getFullYear();
 
         card.innerHTML = `
             <div class="card-content">
-                ${labelHTML}
-                <h4>${escapeHTML(repo.name)}</h4>
-                <p>${escapeHTML(repo.description || 'Projeto desenvolvido durante a graduação.')}</p>
-                <div class="tags">
+                <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                    ${labelHTML}
+                    <span style="font-family:var(--font-mono); font-size:0.7rem; opacity:0.5;">${dataCriacao}</span>
+                </div>
+                <h4 style="margin-bottom:10px;">${escapeHTML(repo.name)}</h4>
+                <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:15px;">${escapeHTML(description)}</p>
+                <div class="tech-row">
                     <span>${escapeHTML(repo.language || 'Code')}</span>
                     <span>⭐ ${repo.stargazers_count}</span>
                 </div>
             </div>
-            <a href="${escapeHTML(repo.html_url)}" target="_blank" class="project-link">Ver Código -></a>
+            <a href="${escapeHTML(repo.html_url)}" target="_blank" class="project-link" style="display:block; margin-top:15px; font-size:0.8rem; color:var(--neon-yellow); text-decoration:none;">View Code -></a>
         `;
         container.appendChild(card);
     });
 }
 
-// Função que busca de VÁRIAS fontes ao mesmo tempo
 async function fetchAllData() {
     const userUrl = `https://api.github.com/users/${CONFIG.username}/repos`;
     const orgUrl = `https://api.github.com/orgs/${CONFIG.orgname}/repos`;
 
     try {
-        // Dispara as duas buscas em paralelo
-        const [userRes, orgRes] = await Promise.all([
-            fetch(userUrl),
-            fetch(orgUrl)
-        ]);
-
+        const [userRes, orgRes] = await Promise.all([fetch(userUrl), fetch(orgUrl)]);
         let combinedRepos = [];
-
-        // Pega seus repositórios
-        if (userRes.ok) {
-            const userData = await userRes.json();
-            combinedRepos = combinedRepos.concat(userData);
-        }
-
-        // Pega os repositórios da organização
-        if (orgRes.ok) {
-            const orgData = await orgRes.json();
-            combinedRepos = combinedRepos.concat(orgData);
-        }
-
+        if (userRes.ok) combinedRepos = combinedRepos.concat(await userRes.json());
+        if (orgRes.ok) combinedRepos = combinedRepos.concat(await orgRes.json());
         return combinedRepos;
-
-    } catch (error) {
-        console.error('Erro ao buscar repositórios:', error);
-        return []; // Retorna vazio se der erro fatal
-    }
+    } catch (error) { return []; }
 }
 
-// Lógica de Cache e Inicialização
 function loadGitHubData() {
     const cached = localStorage.getItem(CONFIG.cacheKey);
     const savedTime = localStorage.getItem(CONFIG.cacheKey + '_time');
     const now = Date.now();
 
-    // Se tiver cache válido (menos de 24h), usa ele
     if (cached && savedTime && (now - savedTime < CONFIG.cacheDuration)) {
         renderProjects(JSON.parse(cached));
         return;
     }
 
-    // Se não, vai buscar na internet
     fetchAllData().then(data => {
         if (data.length > 0) {
             localStorage.setItem(CONFIG.cacheKey, JSON.stringify(data));
             localStorage.setItem(CONFIG.cacheKey + '_time', now);
             renderProjects(data);
         } else {
-            document.getElementById('github-list').innerHTML = '<p>Erro ao carregar projetos.</p>';
+            document.getElementById('github-list').innerHTML = '<p>Erro na conexão.</p>';
         }
     });
 }
 
-// Inicializa
-document.addEventListener('DOMContentLoaded', loadGitHubData);
+document.addEventListener('DOMContentLoaded', () => {
+    updateLanguage();
+    loadGitHubData();
+    initScrollReveal();
+});
