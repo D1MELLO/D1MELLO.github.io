@@ -1,4 +1,4 @@
-/* --- style.css - LAYOUT BENTO GRID & FIAP STYLE --- */
+/* --- style.css - VERSÃO FINAL (MOBILE FIXED) --- */
 
 :root {
     --bg-deep: #050505;
@@ -226,13 +226,11 @@ nav a:hover {
 .bento-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    /* Duas colunas iguais */
     grid-template-rows: auto auto;
     gap: 25px;
     margin-top: 40px;
 }
 
-/* No desktop, fazemos a Certificação ocupar a largura total embaixo */
 .bento-wide {
     grid-column: 1 / -1;
 }
@@ -289,34 +287,38 @@ nav a:hover {
     font-size: 0.95rem;
 }
 
-/* Lista de Certificados Horizontal */
+/* FORMAÇÃO & CERTIFICADOS */
+.education-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 40px;
+}
+
 .cert-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
     list-style: none;
     padding: 0;
-    margin-top: 10px;
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.cert-item {
+.cert-list li {
+    font-size: 0.9rem;
+    color: var(--text-muted);
     display: flex;
     align-items: center;
-    gap: 8px;
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    background: rgba(255, 255, 255, 0.03);
-    padding: 8px 15px;
-    border-radius: 50px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    gap: 10px;
 }
 
-.cert-item strong {
+.cert-list strong {
     color: #fff;
 }
 
-.check {
+.check-icon {
     color: var(--neon-yellow);
+    font-size: 0.8rem;
 }
 
 /* --- SKILLS --- */
@@ -346,7 +348,7 @@ nav a:hover {
     box-shadow: 0 0 15px var(--neon-yellow);
 }
 
-/* --- PROJETOS --- */
+/* --- PROJETOS (GRID & FLEX FIX) --- */
 .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -354,9 +356,15 @@ nav a:hover {
     margin-top: 40px;
 }
 
+/* Fix para alinhar botões */
 .project-card {
     justify-content: space-between;
     align-items: flex-start;
+}
+
+.project-card .card-content {
+    flex-grow: 1;
+    width: 100%;
 }
 
 .badge {
@@ -457,6 +465,9 @@ nav a:hover {
     border-top: 1px solid var(--glass-border);
     color: var(--text-muted);
     font-size: 0.9rem;
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
 
 /* --- ANIMATION --- */
@@ -471,41 +482,86 @@ nav a:hover {
     transform: translateY(0);
 }
 
-/* --- MOBILE --- */
+/* --- RESPONSIVIDADE (MOBILE FIX FINAL V2) --- */
 @media (max-width: 900px) {
-    .bento-grid {
-        grid-template-columns: 1fr;
-    }
 
-    /* Empilha tudo no mobile */
+    /* 1. HEADER: Centralização Total */
     .glass-header {
+        width: 100%;
         border-radius: 0;
         top: 0;
-        width: 100%;
+        padding: 15px 20px;
         flex-direction: column;
+        align-items: center;
         gap: 15px;
-        padding: 20px;
+        background: rgba(5, 5, 5, 0.98);
     }
 
+    .logo {
+        margin-bottom: 5px;
+    }
+
+    /* 2. MENU: Reset de Margens e Estilo Botão */
     nav {
         width: 100%;
+        display: flex;
         justify-content: center;
         flex-wrap: wrap;
-        gap: 15px;
+        gap: 10px;
+        margin: 0;
+        padding: 0;
     }
 
     nav a {
         margin: 0;
-        padding: 5px 10px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 15px;
+        font-size: 0.75rem;
+        padding: 6px 14px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 50px;
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* 3. HERO: Ajustes de Espaço e Centralização */
+    #hero {
+        padding-top: 180px;
+        align-items: center;
+        text-align: center;
     }
 
     .hero-title {
-        font-size: 3.5rem;
+        font-size: 3.2rem;
     }
 
-    #hero {
-        padding-top: 180px;
+    .bio {
+        text-align: center;
+        border-left: none;
+        padding-left: 0;
+        font-size: 1rem;
+    }
+
+    /* --- CORREÇÃO DOS BOTÕES (NOVO) --- */
+    .cta-group {
+        justify-content: center;
+        /* Isso alinha os botões no meio */
+        width: 100%;
+    }
+
+    /* 4. GRIDS: Tudo vira uma coluna */
+    .bento-grid,
+    .dual-column,
+    .projects-grid,
+    .github-grid,
+    .education-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* 5. BOTÃO IDIOMA */
+    .glass-btn {
+        top: auto;
+        bottom: 20px;
+        right: 20px;
+        background: #000;
+        border-color: var(--neon-yellow);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
     }
 }
